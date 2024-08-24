@@ -8,6 +8,7 @@ export const theme = {
     textSecondary: "#616a6a",
     dark: "#2b2d2e",
     white: "#fff",
+    grey: "#bdc3c7",
   },
   spacing: {
     s8: 8,
