@@ -78,6 +78,7 @@ export default TaskCard;
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: -1,
     backgroundColor: "white",
     padding: theme.spacing.s14,
     borderRadius: theme.borderRadius.medium,

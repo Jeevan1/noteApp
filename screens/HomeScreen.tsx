@@ -13,7 +13,12 @@ import { getNote, removeNote } from "../utils/AsyncStorage";
 import { Note } from "../constants";
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
+  const [noteData, setNoteData] = React.useState<Note[]>([]);
   const { notes, loading } = useSelector((state: RootState) => state.notes);
+
+  useEffect(() => {
+    setNoteData(notes);
+  }, [notes]);
 
   if (loading)
     return (
@@ -25,17 +30,19 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   return (
     <>
       <ScrollView style={styles.container}>
-        <SearchInput />
-        <SortContainer />
-        {notes && notes.length > 0 ? (
+        <SearchInput navigation={navigation} />
+        <SortContainer setNoteData={setNoteData} notes={noteData} />
+        {noteData && noteData.length > 0 ? (
           <>
             <TaskCard
-              content={notes[0]}
-              onPress={() => navigation.navigate("Details", { note: notes[0] })}
+              content={noteData[0]}
+              onPress={() =>
+                navigation.navigate("Details", { note: noteData[0] })
+              }
             />
             <View style={styles.taskLayout}>
               <View style={styles.left}>
-                {notes.map((item, i) => {
+                {noteData.slice(1).map((item, i) => {
                   if (i % 2 == 0) {
                     return (
                       <View key={i}>
@@ -51,7 +58,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                 })}
               </View>
               <View style={styles.right}>
-                {notes.map((item, i) => {
+                {noteData.slice(1).map((item, i) => {
                   if (i % 2 != 0) {
                     return (
                       <View key={i}>
